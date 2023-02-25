@@ -1,0 +1,309 @@
+<script language="JavaScript">
+
+var startTime=new Date();
+var endTime=new Date();
+var startPressed=false;
+var bgChangeStarted=false;
+var maxWait=20;
+var timerID;
+
+function startTest()
+{
+	document.body.style.background=document.response.bgColorChange.options[document.response.bgColorChange.selectedIndex].text;
+	bgChangeStarted=true;
+	startTime=new Date();
+}
+
+function remark(responseTime)
+{
+	var responseString="";
+	if (responseTime < 0.10)
+		responseString="-------------";
+	if (responseTime >= 0.10 && responseTime < 0.20)
+		responseString="Nice!";
+	if (responseTime >=0.20 && responseTime < 0.30)
+		responseString="-------------";
+	if (responseTime >=0.30 && responseTime < 0.60)
+		responseString="-------------";
+	if (responseTime >=0.60 && responseTime < 1)
+		responseString="-------------";
+	if (responseTime >=1)
+		responseString="-------------";
+
+	return responseString;
+}
+
+function stopTest()
+{
+	if(bgChangeStarted)
+	{
+		endTime=new Date();
+		var responseTime=(endTime.getTime()-startTime.getTime())/1000;
+
+		document.body.style.backgroundColor = "#293437";   
+		alert("Time: " + responseTime + " seconds " + "\n" + remark(responseTime));
+		startPressed=false;
+		bgChangeStarted=false;
+	}
+	else
+	{
+		if (!startPressed)
+		{
+			alert("press start first to start test");
+		}
+		else
+		{       
+			clearTimeout(timerID);
+			startPressed=false;             
+			alert("Too Early");
+		}               
+	}
+}
+
+var randMULTIPLIER=0x015a4e35;
+var randINCREMENT=1;
+var today=new Date();
+var randSeed=today.getSeconds();
+function randNumber()
+{
+	randSeed = (randMULTIPLIER * randSeed + randINCREMENT) % (1 << 31);
+	return((randSeed >> 15) & 0x7fff) / 32767;
+}
+
+function startit()
+{
+	if(startPressed)
+	{
+		alert("Already started. Press stop to stop");
+		return;
+	}
+	else
+	{
+		startPressed=true; 
+		timerID=setTimeout('startTest()', 6000*randNumber());
+	}
+}
+// --> 
+</script>
+<div class="select-container" >
+<h1>Responce Time<h1>
+<form name="response">
+<select class="select-menu" name="bgColorChange">
+<option selected>red
+<option>pink
+<option>orange
+<option>yellow
+</select>
+<input class="button" type="button" value="start" onClick="startit()">
+<input class="button" type="button" value="stop" onClick="stopTest()">
+</form>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+h2 {
+  margin-top: 40px;
+}
+
+div {
+  margin: 20px auto;
+  max-width: 400px;
+}
+
+#timer,
+#stopwatch,
+#current-time {
+  font-size: 3rem;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f2f2f2;
+  margin-bottom: 20px;
+}
+
+#timer-input {
+  font-size: 1.5rem;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  margin-right: 10px;
+}
+
+button {
+  font-size: 1.5rem;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: #4CAF50;
+  color: white;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #3e8e41;
+}
+
+input[type="text"]::placeholder {
+  color: #ccc;
+}
+
+input[type="text"]:focus {
+  border: 2px solid #4CAF50;
+}
+</style>
+<style>
+      h1 {
+        text-align: center;
+        color: red;
+        text-shadow: 0 0 5px #fff, 0 0 10px #e60073;
+      }
+      .borderless {
+  border: none;
+  outline: none;
+}
+
+    </style>
+        <style>
+      .textarea1 {
+        width: 90%;
+        height: 10px;
+        font-size: 16px;
+        font-family: Arial;
+        padding: 10px;
+        border-radius: 5px;
+        border: 3px solid #293437;
+        resize: none;
+      }
+    </style>
+<style>
+      body {
+        background: #293437;
+        margin-left: 0%;
+        margin-right: 0%;
+        margin-top: 4%;
+        margin-bottom: 5%;
+      }
+      .text {
+        color: red;
+        font-family: 'Astloch', sans-serif;
+        font-size: 40px;
+        transition: 0.5s ease;
+        text-align: center;
+      }
+      .text2 {
+        color: #93E5BE;
+        font-family: 'Astloch', sans-serif;
+        font-size: 30px;
+        transition: 0.5s ease;
+        text-align: center;
+      }
+      .text3 {
+        color: #93E5BE;
+        font-family: 'Astloch', sans-serif;
+        font-size: 40px;
+        transition: 0.5s ease;
+        text-align: center;
+      }
+      div {
+        background: white;
+        padding: 1px;
+        border-radius: 5px;
+        width: 90%;
+        margin: 0 auto;
+      }
+      @keyframes fly {
+        0% { transform: translate(0px,0px) rotate(0deg); }
+        25% { transform: translate(0px,0px) rotate(20deg); }
+        50% { transform: translate(0px,0px) rotate(-20deg); }
+        75% { transform: translate(0px 0px) rotate(0deg); }
+        100% { transform: translate(0px,0px) rotate(0deg); }
+      }
+      @keyframes down {
+        0% { transform: translate(0px,0px) rotate(0deg); }
+        25% { transform: translate(0px,0px) rotate(0deg); }
+        50% { transform: translate(0px,0px) rotate(0deg); }
+        75% { transform: translate(0px 0px) rotate(0deg); }
+        100% { transform: translate(0px,0px) rotate(0deg); }
+      }
+      @media only screen and (max-width: 768px) {
+        body {
+          margin-left: 5%;
+          margin-right: 5%;
+        }
+      }
+    </style>
+    <style>
+      body {
+        text-align: center;
+      }
+      
+      h1 {
+        font-size: 2em;
+        margin-top: 20px;
+      }
+      
+      p {
+        font-size: 1.2em;
+      }
+      
+      textarea {
+        width: 80%;
+        height: 100px;
+        font-size: 1.2em;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+      
+      input[type="number"] {
+        font-size: 1.2em;
+        padding: 5px;
+        width: 20%;
+        margin-bottom: 10px;
+      }
+      
+      button {
+        font-size: 1.2em;
+        padding: 10px 20px;
+        margin-right: 10px;
+      }
+      
+      #output {
+        width: 80%;
+        height: 100px;
+        font-size: 1.2em;
+        padding: 10px;
+        font-family: "Courier New", Courier, monospace;
+      }
+      .button {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 50px;
+  background-color: green;
+  color: white;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  border: 2px solid white;
+}
+
+
+/* The button style when clicked */
+.button.clicked {
+  background-color: #293437;
+  border-color: #fff;
+}
+
+    </style>
+    <script>
+  // Add an event listener to the button to toggle the "clicked" class
+  const button = document.querySelector('.button');
+  button.addEventListener('click', () => {
+    button.classList.toggle('clicked');
+  });
+</script>
